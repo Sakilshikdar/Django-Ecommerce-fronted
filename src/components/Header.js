@@ -32,11 +32,12 @@ class Header extends React.Component {
                                 <Link className="nav-link" aria-current="page" to="/categories">Categories</Link>
                             </li>
 
-                            <li className="nav-item dropdown" onClick={this.toggleDropdown}>
-                                <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded={this.state.isDropdownOpen ? "true" : "false"}>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     My Account
                                 </a>
-                                <div className={"dropdown-menu" + (this.state.isDropdownOpen ? " show" : "")} aria-labelledby="navbarDropdown">
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <Link to='/customer/register' className="dropdown-item" >Register</Link>
                                     <Link to='/customer/login' className="dropdown-item" >Login</Link>
                                     <Link to='/customer/dashboard' className="dropdown-item" >Dashboard</Link>
@@ -45,16 +46,22 @@ class Header extends React.Component {
                                 </div>
                             </li>
 
-                            <li className="nav-item dropdown" onClick={this.toggleDropdown}>
-                                <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded={this.state.isDropdownOpen ? "true" : "false"}>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Saller Panel
                                 </a>
-                                <div className={"dropdown-menu" + (this.state.isDropdownOpen ? " show" : "")} aria-labelledby="navbarDropdown">
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <Link to='/seller/register' className="dropdown-item" >Register</Link>
                                     <Link to='/seller/login' className="dropdown-item" >Login</Link>
                                     <Link to='/seller/dashboard' className="dropdown-item" >Dashboard</Link>
                                 </div>
                             </li>
+
+
+
+
+
 
                             <li className="nav-item">
                                 <Link className="nav-link" aria-current="page" to="/Checkout">New Orders (4) </Link>
@@ -65,7 +72,7 @@ class Header extends React.Component {
                         </ul>
                     </div>
                 </div>
-            </nav>
+            </nav >
         );
     }
 }

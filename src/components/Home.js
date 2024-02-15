@@ -1,7 +1,25 @@
 import { Link } from 'react-router-dom';
 import SingleProduct from './SingleProduct';
+import { useState, useEffect } from 'react';
 
 function Home() {
+
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        fetch('http://127.0.0.1:8000/api/products/')
+            .then(response => response.json())
+            .then(data => {
+                setProducts(data.results);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            })
+    }, []); // Empty dependency array means the effect runs only once on mount
+
+
+
+
     return (
         <main className=' mt-4'>
             <div className='container'>
@@ -9,17 +27,16 @@ function Home() {
                 <div className='d-flex align-items-center justify-content-between'>
                     <h3 className='mb-4 '>Latest Products
                     </h3>
-                    <Link to="/allProducts" className='mb-4  btn  btn-dark text-md-end'>View All Products <i className="fa-solid fa-arrow-right px-1"></i></Link>
+                    <Link to="/products" className='mb-4  btn  btn-dark text-md-end'>View All Products <i className="fa-solid fa-arrow-right px-1"></i></Link>
                 </div>
                 <div className='row mb-4'>
 
-                    <SingleProduct title="Django-Product-1" />
-                    <SingleProduct title="Django-Product-2" />
-                    <SingleProduct title="Django-Product-1" />
-                    <SingleProduct title="Django-Product-1" />
-                    <SingleProduct title="Django-Product-1" />
-                    <SingleProduct title="Django-Product-1" />
-                    <SingleProduct title="Django-Product-1" />
+                    {
+                        products.map((product, index) => {
+                            return <SingleProduct key={index} product={product} />
+                        })
+
+                    }
                 </div>
                 {/* leatest products end */}
 
@@ -28,7 +45,7 @@ function Home() {
                 <div className='d-flex align-items-center justify-content-between'>
                     <h3 className='mb-4'>Propular Categories
                     </h3>
-                    <a href='#' className='mb-4  btn  btn-dark'>View All Categories <i className="fa-solid fa-arrow-right px-1"></i></a>
+                    <Link to='/catagories' className='mb-4  btn  btn-dark'>View All Categories <i className="fa-solid fa-arrow-right px-1"></i></Link>
                 </div>
                 <div className='row mb-4'>
                     <div className='col-12 col-md-3 mb-4'>

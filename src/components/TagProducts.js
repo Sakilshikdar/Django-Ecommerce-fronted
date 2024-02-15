@@ -2,13 +2,13 @@ import SingleProduct from "./SingleProduct";
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 
-function CategoryProducts() {
+function TagProducts() {
     const baseUrl = "http://127.0.0.1:8000/api"
     const [products, setProducts] = useState([]);
     const [totalResult, setTotalResult] = useState(0);
-    const { category_id, category_slug } = useParams();
+    const { tag } = useParams();
     useEffect(() => {
-        fetchData(baseUrl + `/products/?category/=` + category_id);
+        fetchData(baseUrl + `/products/` + tag);
     }, []); // Empty dependency array means the effect runs only once on mount
 
     function fetchData(baseurl) {
@@ -30,7 +30,7 @@ function CategoryProducts() {
     var limite = 1;
     var totallink = totalResult / limite;
     for (let i = 1; i <= totallink; i++) {
-        links.push(<li class="page-item"><Link onClick={() => changeUrl(baseUrl + `/products/?category=${category_id}&page=${i}`)} to={`/category/${category_slug}/${category_id}/?page=${i}`} class="page-link" >{i}</Link></li>);
+        links.push(<li class="page-item"><Link onClick={() => changeUrl(baseUrl + `/products/${tag}&page=${i}`)} to={`/products/${tag}/?page=${i}`} class="page-link" >{i}</Link></li>);
     }
     return (
         <section className="container my-4">
@@ -54,4 +54,4 @@ function CategoryProducts() {
     )
 }
 
-export default CategoryProducts;
+export default TagProducts;
