@@ -1,20 +1,41 @@
 import React from "react";
 import Sidebar from "./Sidebar";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 
-function AddAddress() {
+
+function UpdateAddress() {
 
     const baseUrl = "http://127.0.0.1:8000/api"
+    const { address_id } = useParams();
     const customer_id = localStorage.getItem('customer_id');
-    console.log(customer_id);
     const [ErrorMsg, setErrorMsg] = useState('');
     const [SuccessMsg, setSuccessMsg] = useState('');
     const [AddressFromData, setAddressFromData] = useState({
         'address': '',
         'customer': customer_id,
     });
+
+
+    const disbleButton = (AddressFromData.address == '')
+
+    useEffect(() => {
+        fetchData(baseUrl + '/address/' + address_id);
+    }, []);
+
+    function fetchData(baseurl) {
+        fetch(baseurl)
+            .then(response => response.json())
+            .then(data => {
+                setAddressFromData({ 'address': data.address });
+                // console.log(data);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }
 
     const inputHandler = (e) => {
         setAddressFromData({ ...AddressFromData, [e.target.name]: e.target.value });
@@ -27,25 +48,22 @@ function AddAddress() {
         const formData = new FormData();
         formData.append('address', AddressFromData.address);
         formData.append('customer', AddressFromData.customer);
-        axios.post(baseUrl + '/address/', formData,)
+        axios.put(baseUrl + '/address/' + parseInt(address_id) + '/', formData,)
             .then(function (response) {
-                if (response.status != 201) {
-                    setErrorMsg('Failed to update address');
+                if (response.status != 200) {
+                    setErrorMsg('Failed to add address');
                     setSuccessMsg('');
                 } else {
-                    setErrorMsg('');
                     setSuccessMsg('Address added successfully');
+                    setErrorMsg('');
+                    // Handle unexpected response status
                 }
-                console.log(response);
             }
             )
             .catch(function (error) {
                 console.log(error);
             });
     }
-
-    const disbleButton = (AddressFromData.address == '')
-
     return (
         <div>
             <div className="container mt-5">
@@ -57,7 +75,7 @@ function AddAddress() {
                         <div className="card-header">
 
                             <h3 className="mb-4">
-                                Add Address
+                                Update Address
                             </h3>
                         </div>
                         <div className="card-body">
@@ -66,7 +84,6 @@ function AddAddress() {
 
                             <form>
                                 <div className="form-group">
-                                    <label for="address" className="from-label">Add Address</label>
                                     <textarea name="address" value={AddressFromData.address} onChange={inputHandler} className="form-control" id='address' placeholder="Enter your address" />
                                 </div>
                                 <button onClick={submitHandler} type="submit" className="btn btn-primary my-3" disabled={disbleButton}>Submit</button>
@@ -81,4 +98,4 @@ function AddAddress() {
         </div>
     );
 }
-export default AddAddress;
+export default UpdateAddress;

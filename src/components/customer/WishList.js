@@ -1,7 +1,50 @@
 import Sidebar from "./Sidebar";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { useState } from "react";
+import { useContext } from "react";
+import { CurrencyContext } from "../../Context"
+import axios from 'axios';
+
+
+
 
 function WishList() {
+    const baseurl = 'http://127.0.0.1:8000/api/'
+    const customer_id = localStorage.getItem('customer_id');
+    const [WishlistItem, setWishlistItem] = useState([]);
+
+    const { CurrencyDate } = useContext(CurrencyContext);
+
+    useEffect(() => {
+        fetchData(baseurl + `customer/` + customer_id + `/wishitems/`);
+    }, []); // Empty dependency array means the effect runs only once on mount
+
+    function fetchData(baseurl) {
+        fetch(baseurl)
+            .then(response => response.json())
+            .then(data => {
+                setWishlistItem(data.results);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }
+
+    function removedFromWishlist(wishlist_id) {
+        const formData = new FormData();
+        formData.append('wishlist_id', wishlist_id);
+        axios.post(baseurl + 'remove_from_wishlist/', formData)
+            .then(function (response) {
+                if (response.data.bool == true) {
+                    document.getElementById(`row${wishlist_id}`).remove();
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+    }
     return (
         <div>
             <div className="container mt-5">
@@ -21,43 +64,29 @@ function WishList() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td> <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCRKguaNZrVn6-NK9Ir6VdZf7PoRwLStgLLgsoSMq9ZA&s" className="image-thumbnail" width={60} alt="..." /> Django</td>
-                                        <td>500$</td>
-
-                                        <td><button className="btn btn-danger btn-sm">Removed</button></td>
-                                    </tr>
-                                </tbody>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td> <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCRKguaNZrVn6-NK9Ir6VdZf7PoRwLStgLLgsoSMq9ZA&s" className="image-thumbnail" width={60} alt="..." /> ReactJs</td>
-                                        <td>700$</td>
-                                        <td><button className="btn btn-danger btn-sm">Removed</button></td>
-                                    </tr>
-                                </tbody>
-                                <tbody>
-                                    <tr>
-
-                                        <td>1</td>
-                                        <td> <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCRKguaNZrVn6-NK9Ir6VdZf7PoRwLStgLLgsoSMq9ZA&s" className="image-thumbnail" width={60} alt="..." /> Flux</td>
-                                        <td>200$</td>
-
-                                        <td><button className="btn btn-danger btn-sm">Removed</button></td>
-                                    </tr>
+                                    {
+                                        WishlistItem.map((item, index) => {
+                                            return (
+                                                <tr id={`row${item.id}`} key={index}>
+                                                    <td>{index + 1}</td>
+                                                    <td> <img src={item.product.product_imgs[0].image} className="image-thumbnail" width={60} alt="..." /> {item.product.title}</td>
+                                                    <td>
+                                                        {
+                                                            CurrencyDate != 'usd' &&
+                                                            <h6> TK. {item.product.price}</h6>
+                                                        }
+                                                        {
+                                                            CurrencyDate == 'usd' &&
+                                                            <h6> $. {item.product.usd_price}</h6>
+                                                        }
+                                                    </td>
+                                                    <td><button onClick={() => removedFromWishlist(item.id)} className="btn btn-danger btn-sm">Removed</button></td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
                                 </tbody>
 
-
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td> <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCRKguaNZrVn6-NK9Ir6VdZf7PoRwLStgLLgsoSMq9ZA&s" className="image-thumbnail" width={60} alt="..." /> Python</td>
-                                        <td>800$</td>
-
-                                        <td><button className="btn btn-danger btn-sm">Removed</button></td>
-                                    </tr>
-                                </tbody>
                             </table>
                         </div>
 

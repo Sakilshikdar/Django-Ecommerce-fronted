@@ -23,7 +23,7 @@ function AllProducts() {
     }
 
     function changeUrl(baseurl) {
-        console.log(baseurl);
+
         fetchData(baseurl);
     }
     var links = [];

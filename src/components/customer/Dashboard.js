@@ -1,6 +1,34 @@
 import Sidebar from "./Sidebar";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 function Dashboard() {
+    const baseUrl = "http://127.0.0.1:8000/api"
+    const customer_id = localStorage.getItem('customer_id');
+    const [CountList, setCountList] = useState({
+        'totalOrders': 0,
+        'totalAddress': 0,
+        'totalWishList': 0
+    });
+
+    useEffect(() => {
+        fetchData(baseUrl + '/customer/dashboard/' + customer_id);
+    }, []);
+    function fetchData(baseurl) {
+        fetch(baseurl)
+            .then(response => response.json())
+            .then(data => {
+                setCountList({
+                    'totalOrders': data.totalOrders,
+                    'totalAddress': data.totalAddress,
+                    'totalWishList': data.totalWishList
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }
+
     return (
         <div>
             <div className="container mt-5">
@@ -16,7 +44,8 @@ function Dashboard() {
                                         <div className="card-body text-center">
                                             <h4>Total Orders</h4>
                                             <h4>
-                                                <a href="#">123</a>
+                                                <Link to="/customer/orders">
+                                                    {CountList.totalOrders}</Link>
                                             </h4>
                                         </div>
                                     </div>
@@ -28,7 +57,7 @@ function Dashboard() {
                                         <div className="card-body text-center">
                                             <h4>Total Wishlist</h4>
                                             <h4>
-                                                <a href="#">123</a>
+                                                <Link to="/customer/WishList" >{CountList.totalWishList}</Link>
                                             </h4>
                                         </div>
                                     </div>
@@ -40,7 +69,7 @@ function Dashboard() {
                                         <div className="card-body text-center">
                                             <h4>Total Address</h4>
                                             <h4>
-                                                <a href="#">123</a>
+                                                <Link to="/customer/address">{CountList.totalAddress}</Link>
                                             </h4>
                                         </div>
                                     </div>

@@ -1,17 +1,13 @@
 import { Link } from "react-router-dom";
-import { useContext } from "react";
-import { CurrencyContext } from "../Context";
 
-function SingleProduct(props) {
-
-    const { CurrencyDate } = useContext(CurrencyContext);
-
+function SingleRelatedProduct(props) {
     return (
-        <div className=" col-12 col-md-3 my-4">
+        <div className=" col-4 offset-4 my-4">
 
             <div className="card">
+                {!props.product.image && <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCRKguaNZrVn6-NK9Ir6VdZf7PoRwLStgLLgsoSMq9ZA&s' className="card-img-top" alt="..." />}
                 <Link to={`/product/${props.product.title}/${props.product.id}`}>
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCRKguaNZrVn6-NK9Ir6VdZf7PoRwLStgLLgsoSMq9ZA&s" className="card-img-top" alt="..." />
+                    {props.product.image && <img src={props.product.image} className="card-img-top" alt="..." />}
                 </Link>
                 <div className="card-body shadow">
                     <h4 className="card-title">
@@ -19,14 +15,7 @@ function SingleProduct(props) {
                             {props?.product.title}
                         </Link>
                     </h4>
-                    {
-                        CurrencyDate != 'usd' &&
-                        <h5>Price: TK. {props.product.price}</h5>
-                    }
-                    {
-                        CurrencyDate == 'usd' &&
-                        <h5>Price: $. {props.product.usd_price}</h5>
-                    }
+                    <h5 className="card-title text-muted">Price: {props.product.price}$ </h5>
                     <div className="card-footer">
                         <button title='add to card' className='btn btn-success btn-sm'>
                             <i className="fa-solid fa-cart-shopping "></i>
@@ -41,4 +30,4 @@ function SingleProduct(props) {
     )
 }
 
-export default SingleProduct;
+export default SingleRelatedProduct;

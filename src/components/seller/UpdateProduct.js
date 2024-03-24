@@ -1,8 +1,10 @@
 import SellerSidebar from "./SellerSidebar";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
-function AddProduct() {
+function UpdateProduct() {
+    const { product_id } = useParams();
     const vendor_id = (localStorage.getItem('vendor_id'));
     const baseurl = 'http://127.0.0.1:8000/api/'
     const customer_id = localStorage.getItem('customer_id');
@@ -19,6 +21,7 @@ function AddProduct() {
         "price": '',
         "usd_price": '',
         "demo_url": '',
+        'product_imgs': '',
         "product_file": '',
         "image": ''
     });
@@ -27,20 +30,32 @@ function AddProduct() {
     const [ImageUploadError, setImageUploadError] = useState('');
     const [ImageUploadSuccess, setImageUploadSuccess] = useState('');
     const [ProductImgs, setProductImgs] = useState([]);
+    const [IsFeatureImageSelected, setIsFeatureImageSelected] = useState(false);
+    const [IsProductFileSelected, setIsProductFileSelected] = useState(false);
 
 
     const inputHandler = (e) => {
         setProductData({ ...productData, [e.target.name]: e.target.value });
+
     }
     const fileHandler = (e) => {
         setProductData({ ...productData, [e.target.name]: e.target.files[0] });
+        if (e.target.name == 'image') {
+            setIsFeatureImageSelected(true);
+        }
+        if (e.target.name == 'product_file') {
+            setIsProductFileSelected(true);
+        }
     }
 
 
 
     useEffect(() => {
         fetchData(baseurl + `catagories/`);
+        fetchProductData(baseurl + `product/` + product_id);
     }, []);
+
+
 
     function fetchData(baseurl) {
         fetch(baseurl)
@@ -52,6 +67,18 @@ function AddProduct() {
                 console.error('Error fetching data:', error);
             });
     }
+    function fetchProductData(baseurl) {
+        fetch(baseurl)
+            .then(response => response.json())
+            .then(data => {
+                setProductData(data);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }
+
+
 
 
     const multipleFileHandler = (event) => {
@@ -75,10 +102,15 @@ function AddProduct() {
         formData.append('price', productData.price);
         formData.append('usd_price', productData.usd_price);
         formData.append('demo_url', productData.demo_url);
-        formData.append('product_file', productData.product_file);
-        formData.append('product_imgs', ProductImgs);
+        // formData.append('product_imgs', productData.product_imgs);
+        if (IsFeatureImageSelected) {
+            formData.append('image', productData.image);
+        }
+        if (IsProductFileSelected) {
+            formData.append('product_file', productData.product_file);
+        }
 
-        axios.post(baseurl + 'products/', formData, {
+        axios.patch(baseurl + 'product/' + product_id + '/', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             }
@@ -137,7 +169,7 @@ function AddProduct() {
                 console.log(error);
             });
     }
-
+    console.log(productData);
 
 
     return (
@@ -151,7 +183,7 @@ function AddProduct() {
                         <div className="card-header">
 
                             <h3 className="mb-4">
-                                Add Product
+                                Update Product
                             </h3>
                         </div>
                         <div className="card-body">
@@ -160,15 +192,16 @@ function AddProduct() {
 
                             <form>
                                 <div className="form-group mb-2">
-                                    <label for="Categories">Category</label>
-                                    <select className="form-control" id='Categories' name="category" onChange={inputHandler}>
+                                    <label for="Category">Category</label>
+                                    <select className="form-control" id='Category' name="category" onChange={inputHandler}>
                                         {
                                             categoryData.map((item) => {
                                                 return (
-                                                    <option value={item.id}>{item.title}</option>
+                                                    <option disabled selected={item.id == productData.category} value={item.id}>{item.title}</option>
                                                 )
                                             })}
                                     </select>
+
                                 </div>
                                 <div className="form-group  mb-2">
                                     <label for="Title">Title</label>
@@ -202,14 +235,23 @@ function AddProduct() {
                                 <div className="form-group  mb-2">
                                     <label for="image">Feture Image: </label>
                                     <input name="image" type="file" onChange={fileHandler} className="form-control" id='image' />
+
+                                    <img src={productData.image} className="image rounded border mt-2 " width={200} />
                                 </div>
                                 <div className="form-group  mb-2">
                                     <label for="Product_Imgs">Product Images: </label>
                                     <input name="product_imgs" multiple type="file" onChange={multipleFileHandler} className="form-control" id='Product_Imgs' />
+                                    {productData.product_imgs.length > 0 && productData.product_imgs.map((item) => {
+                                        return (
+                                            <img src={item.image} className="image rounded border mt-2 me-2" width={200} />
+                                        )
+                                    }
+                                    )}
                                 </div>
                                 <div className="form-group mb-2">
                                     <label for="product_file"> Product File</label>
                                     <input type="file" name="product_file" onChange={fileHandler} className="form-control" id='product_file' />
+                                    {/* <a href={productData.product_file}>{productData.product_file}</a> */}
                                 </div>
 
                                 <button onClick={submitHandler} type="button" className="btn btn-primary my-3">Submit</button>
@@ -224,4 +266,4 @@ function AddProduct() {
         </div>
     );
 }
-export default AddProduct;
+export default UpdateProduct;

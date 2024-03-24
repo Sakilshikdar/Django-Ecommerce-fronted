@@ -1,7 +1,28 @@
 import SellerSidebar from "./SellerSidebar";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 function SellerProducts() {
+
+    const baseUrl = "http://127.0.0.1:8000/api"
+    // const customer_id = localStorage.getItem('vendor_id');
+    const [ProductsList, setProductsList] = useState([]);
+
+    useEffect(() => {
+        fetchData(baseUrl + '/products/');
+    }, []);
+
+    function fetchData(baseurl) {
+        fetch(baseurl)
+            .then(response => response.json())
+            .then(data => {
+                setProductsList(data.results);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }
+    console.log(ProductsList);
     return (
         <div>
             <div className="container mt-5">
@@ -29,18 +50,24 @@ function SellerProducts() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Product Title</td>
-                                        <td>500$</td>
-                                        <td>Published</td>
-                                        <td>
-                                            <a href="#" className="btn btn-info btn-sm">View</a>
-                                            <a href="#" className="btn btn-primary btn-sm ms-1">Edit</a>
-                                            <a href="#" className="btn btn-danger btn-sm ms-1">Delete</a>
+                                    {
+                                        ProductsList.map((product, index) => (
+                                            <tr>
+                                                <td>{index + 1}</td>
+                                                <td><Link to={`/seller/update-product/${product.id}`}> {product.title}</Link></td>
+                                                <td>&#2547; {product.price}$</td>
+                                                <td>$ {product.usd_price}$</td>
+                                                <td>{
+                                                    product.publish_status == 1 ? <span className="badge bg-success">Published</span> : <span className="badge bg-danger">Pending</span>
+                                                }</td>
+                                                <td>
+                                                    <a href="#" className="btn btn-primary btn-sm ms-1">Edit</a>
+                                                    <a href="#" className="btn btn-danger btn-sm ms-1">Delete</a>
 
-                                        </td>
-                                    </tr>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    }
                                 </tbody>
                             </table>
                         </div>

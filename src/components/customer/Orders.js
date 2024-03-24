@@ -1,7 +1,32 @@
 import Sidebar from "./Sidebar";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { useState } from "react";
+import OrderRow from "./OrderRow";
+
+
 
 function Orders() {
+    const baseurl = 'http://127.0.0.1:8000/api/'
+    const customer_id = localStorage.getItem('customer_id');
+    const [orders, setOrders] = useState([]);
+
+
+    useEffect(() => {
+        fetchData(baseurl + `customer/` + customer_id + `/orderitems/`);
+    }, []);
+
+    function fetchData(baseurl) {
+        fetch(baseurl)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.results);
+                setOrders(data.results);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }
+
     return (
         <div>
             <div className="container mt-5">
@@ -21,46 +46,12 @@ function Orders() {
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td> <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCRKguaNZrVn6-NK9Ir6VdZf7PoRwLStgLLgsoSMq9ZA&s" className="image-thumbnail" width={60} alt="..." /> Django</td>
-                                        <td>500$</td>
-                                        <td> <span className="text-success"><i className="fa fa-check-circle"></i>Completed</span></td>
-                                        <td><button className="btn btn-primary btn-sm">Download</button></td>
-                                    </tr>
-                                </tbody>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td> <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCRKguaNZrVn6-NK9Ir6VdZf7PoRwLStgLLgsoSMq9ZA&s" className="image-thumbnail" width={60} alt="..." /> ReactJs</td>
-                                        <td>700$</td>
-                                        <td> <span className="text-success"><i className="fa fa-check-circle"></i>Completed</span></td>
-                                        <td><button className="btn btn-primary btn-sm">Download</button></td>
-                                    </tr>
-                                </tbody>
-                                <tbody>
-                                    <tr>
-
-                                        <td>1</td>
-                                        <td> <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCRKguaNZrVn6-NK9Ir6VdZf7PoRwLStgLLgsoSMq9ZA&s" className="image-thumbnail" width={60} alt="..." /> Flux</td>
-                                        <td>200$</td>
-                                        <td> <span className="text-danger"><i className="fa fa-spin fa-spinner "></i>Processing</span></td>
-                                        <td></td>
-                                    </tr>
+                                <tbody className="text-center">
+                                    {orders.map((order, index) => {
+                                        return <OrderRow key={index} order={order} index={index} />
+                                    })}
                                 </tbody>
 
-
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td> <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCRKguaNZrVn6-NK9Ir6VdZf7PoRwLStgLLgsoSMq9ZA&s" className="image-thumbnail" width={60} alt="..." /> Python</td>
-                                        <td>800$</td>
-                                        <td> <span className="text-danger"><i className="fa fa-check-circle"></i>Cancle</span>
-                                        </td>
-                                        <td></td>
-                                    </tr>
-                                </tbody>
                             </table>
                         </div>
 
@@ -68,7 +59,7 @@ function Orders() {
                 </div>
             </div>
 
-        </div>
+        </div >
     );
 }
 export default Orders;
