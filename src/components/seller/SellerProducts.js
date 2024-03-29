@@ -22,7 +22,22 @@ function SellerProducts() {
                 console.error('Error fetching data:', error);
             });
     }
-    console.log(ProductsList);
+
+    const ShowDelete = (product_id) => {
+        var deleteConfirm = window.confirm("Are you sure you want to delete?");
+        if (deleteConfirm) {
+            fetch(baseUrl + '/product/' + product_id,
+                {
+                    method: 'DELETE'
+                }
+            )
+                .then(response => {
+                    if (response.status == 204) {
+                        fetchData(baseUrl + '/products/');
+                    }
+                })
+        }
+    }
     return (
         <div>
             <div className="container mt-5">
@@ -61,8 +76,8 @@ function SellerProducts() {
                                                     product.publish_status == 1 ? <span className="badge bg-success">Published</span> : <span className="badge bg-danger">Pending</span>
                                                 }</td>
                                                 <td>
-                                                    <a href="#" className="btn btn-primary btn-sm ms-1">Edit</a>
-                                                    <a href="#" className="btn btn-danger btn-sm ms-1">Delete</a>
+                                                    <Link to={`/seller/update-product/${product.id}`} className="btn btn-primary btn-sm ms-1">Edit</Link>
+                                                    <Link onClick={() => ShowDelete(product.id)} className="btn btn-danger btn-sm ms-1">Delete</Link>
 
                                                 </td>
                                             </tr>

@@ -34,7 +34,7 @@ function OrderRow(props) {
             <td>{index + 1}</td>
             <td>
                 <Link to={`/product/${order.product.slug}/${order.product.id}`}>
-                    <img src={`${baseurl}/${order.product.product_imgs[1].image}`} className="image-thumbnail" width={60} alt="..." /> Django
+                    <img src={`${baseurl}/${order.product.image}`} className="image-thumbnail" width={60} alt="..." /> Django
                 </Link>
             </td>
             <td>
@@ -52,7 +52,16 @@ function OrderRow(props) {
 
                 </span>
             </td>
-            <td><button onClick={() => countdownloads(order.product.id)} target="_blank" className="btn btn-primary btn-sm">Download <span className="badge bg-white text-dark">{order.product.downloads}</span></button></td>
+            <td>
+                {
+                    order.order.order_status == true &&
+                    <button onClick={() => countdownloads(order.product.id)} target="_blank" className="btn btn-primary btn-sm me:sm-4 me-2">Download <span className="badge bg-white text-dark">{order.product.downloads}</span></button>
+                }
+                {
+                    order.order.order_status == true &&
+                    <Link to={`/customer/add-review/${order.product.id}`} className=" my-2 me-2 btn btn-primary btn-sm">Add Review </Link>
+                }
+            </td>
         </tr>
     );
 }

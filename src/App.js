@@ -34,6 +34,7 @@ import Address from './components/customer/Address';
 import AddAddress from './components/customer/AddAddress';
 
 // seller components
+import AllSellers from './components/AllSellers';
 import SellerRegister from './components/seller/SellerRegister';
 import SellerLogin from './components/seller/SellerLogin';
 import SellerDashboard from './components/seller/SellerDashboard';
@@ -47,6 +48,12 @@ import SellerChangePassword from './components/seller/SellerChangePassword';
 import UpdateAddress from './components/customer/UpdateAddress';
 import SellerLogout from './components/seller/SellerLogout';
 import UpdateProduct from './components/seller/UpdateProduct';
+import CustomerOrders from './components/seller/CustomerOrders';
+import DailyReport from './components/seller/DailyReport';
+import MonthlyReport from './components/seller/MonthlyReport';
+import YearlyReport from './components/seller/YearlyReport ';
+import AddReview from './components/customer/AddRewiew';
+import SellerDetails from './components/seller/SellerDetails';
 
 const currerentCurrency = localStorage.getItem('currency');
 const checkCart = localStorage.getItem('cartData');
@@ -79,11 +86,14 @@ function App() {
           <Route path='/customer/ChangePassword' element={<ChangePassword />} />
           <Route path='/customer/address' element={<Address />} />
           <Route path='/customer/AddAddress' element={<AddAddress />} />
+          <Route path='/customer/add-review/:product_id' element={<AddReview />} />
           <Route path='/customer/update-address/:address_id' element={<UpdateAddress />} />
 
 
           {/* seller routes */}
 
+          <Route path='/sellers' element={<AllSellers />} />
+          <Route path='/seller/:seller_username/:seller_id' element={<SellerDetails />} />
           <Route path='/seller/register' element={<SellerRegister />} />
           <Route path='/seller/login' element={<SellerLogin />} />
           <Route path='/seller/logout' element={<SellerLogout />} />
@@ -93,9 +103,14 @@ function App() {
           <Route path='/seller/update-product/:product_id' element={<UpdateProduct />} />
           <Route path='/seller/VendorOrders' element={<VendorOrders />} />
           <Route path='/seller/Customer' element={<Customer />} />
+          <Route path='/seller/customer/:customer_id/orderitems' element={< CustomerOrders />} />
           <Route path='/seller/Reports' element={<Reports />} />
           <Route path='/seller/SellerUpdateProfile' element={<SellerUpdateProfile />} />
           <Route path='/seller/SellerChangePassword' element={<SellerChangePassword />} />
+          <Route path='/seller/daily-report' element={<DailyReport />} />
+          <Route path='/seller/monthly-report' element={<MonthlyReport />} />
+          <Route path='/seller/yearly-report' element={<YearlyReport />} />
+
 
         </Routes>
         <Footer />

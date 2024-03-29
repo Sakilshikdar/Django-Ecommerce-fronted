@@ -27,11 +27,10 @@ function UpdateProduct() {
     });
 
 
-    const [ImageUploadError, setImageUploadError] = useState('');
-    const [ImageUploadSuccess, setImageUploadSuccess] = useState('');
     const [ProductImgs, setProductImgs] = useState([]);
     const [IsFeatureImageSelected, setIsFeatureImageSelected] = useState(false);
     const [IsProductFileSelected, setIsProductFileSelected] = useState(false);
+    const [IsMultipleImageSelected, setIsMultipleImageSelected] = useState(false);
 
 
     const inputHandler = (e) => {
@@ -84,6 +83,7 @@ function UpdateProduct() {
     const multipleFileHandler = (event) => {
         var files = event.target.files;
         if (files.length > 0) {
+            setIsMultipleImageSelected(true);
             setProductImgs(files)
         }
     }
@@ -117,45 +117,32 @@ function UpdateProduct() {
         })
             .then(function (response) {
 
-                if (response.status == 201) {
-                    setProductData({
-                        "category": '',
-                        "title": '',
-                        'vendor': '',
-                        "slug": '',
-                        "details": '',
-                        "tags": '',
-                        "price": '',
-                        "usd_price": '',
-                        "demo_url": '',
-                        "product_file": '',
-                        "product_imgs": '',
-                        "image": ''
-                    })
+                if (response.status == 200) {
+
                     setErrorMsg(
                         ''
                     );
                     setSuccessMsg(response.statusText);
 
 
-
                     //submit files
-                    for (let i = 0; i < ProductImgs.length; i++) {
-                        const ImageFormData = new FormData();
-                        ImageFormData.append('product', response.data.id);
-                        ImageFormData.append('image', ProductImgs[i]);
-                        axios.post(baseurl + 'product-imgs/', ImageFormData)
-                            .then(function (response) {
-                                console.log(response);
+                    if (IsMultipleImageSelected) {
+                        for (let i = 0; i < ProductImgs.length; i++) {
+                            const ImageFormData = new FormData();
+                            ImageFormData.append('product', response.data.id);
+                            ImageFormData.append('image', ProductImgs[i]);
+                            axios.post(baseurl + 'product-imgs/?from_update=1', ImageFormData)
+                                .then(function (response) {
+                                    console.log(response);
 
-                            })
-                            .catch(function (error) {
-                                console.log(error);
-                            });
-                        //end upload images
+                                })
+                                .catch(function (error) {
+                                    console.log(error);
+                                });
+                            //end upload images
 
+                        }
                     }
-                    setProductImgs('')
 
 
                 }
@@ -169,9 +156,21 @@ function UpdateProduct() {
                 console.log(error);
             });
     }
+
+
+    function deleteImage(id) {
+        axios.delete(baseurl + 'product-img/' + id + '/')
+            .then(function (response) {
+                if (response.status == 204) {
+                    window.location.reload();
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
     console.log(productData);
-
-
     return (
         <div>
             <div className="container mt-5">
@@ -240,10 +239,13 @@ function UpdateProduct() {
                                 </div>
                                 <div className="form-group  mb-2">
                                     <label for="Product_Imgs">Product Images: </label>
-                                    <input name="product_imgs" multiple type="file" onChange={multipleFileHandler} className="form-control" id='Product_Imgs' />
-                                    {productData.product_imgs.length > 0 && productData.product_imgs.map((item) => {
+                                    <input name="product_imgs" multiple type="file" onChange={multipleFileHandler} className="form-control mb-3" id='Product_Imgs' />
+                                    {productData.product_imgs.length > 0 && productData.product_imgs.map((item, index) => {
                                         return (
-                                            <img src={item.image} className="image rounded border mt-2 me-2" width={200} />
+                                            <span className="image-box d-inline  p-3 my-2" onClick={() => deleteImage(item.id)} >
+                                                <i className="trash fas fa-trash text-danger" role="button" style={styles.deleteBtn}></i>
+                                                <img src={item.image} className="my-4" width={200} />
+                                            </span>
                                         )
                                     }
                                     )}
@@ -265,5 +267,13 @@ function UpdateProduct() {
             </div>
         </div>
     );
+}
+
+
+const styles = {
+    'deleteBtn': {
+        'position': 'absolute',
+
+    }
 }
 export default UpdateProduct;

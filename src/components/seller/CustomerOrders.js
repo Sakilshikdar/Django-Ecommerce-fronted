@@ -1,21 +1,22 @@
 import SellerSidebar from "./SellerSidebar";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 
-function VendorOrders() {
+function CustomerOrders() {
 
-    const baseurl = 'http://127.0.0.1:8000/api/'
+    const baseurl = 'http://127.0.0.1:8000/api'
     const [OrderItmes, setOrderItems] = useState([]);
     const vendor_id = localStorage.getItem('vendor_id');
+    const { customer_id } = useParams()
     useEffect(() => {
-        fetOrderchData(baseurl + 'vendor/' + vendor_id + '/orderitems/');
+        fetchOrderchData(`${baseurl}/vendor/${vendor_id}/customer/${customer_id}/orderitems/`);
     }, []);
 
 
 
 
-    function fetOrderchData(baseurl) {
+    function fetchOrderchData(baseurl) {
         fetch(baseurl)
             .then(response => response.json())
             .then(data => {
@@ -37,12 +38,14 @@ function VendorOrders() {
         })
             .then(function (response) {
                 if (response.status == 200) {
-                    fetOrderchData(baseurl + 'vendor/' + vendor_id + '/orderitems/');
+                    fetchOrderchData(`${baseurl}/vendor/${vendor_id}/customer/${customer_id}/orderitems`);
                 }
             }
             )
 
     }
+
+
 
     return (
         <div>
@@ -110,4 +113,4 @@ function VendorOrders() {
         </div>
     );
 }
-export default VendorOrders;
+export default CustomerOrders;

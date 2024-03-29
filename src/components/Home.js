@@ -1,10 +1,29 @@
 import { Link } from 'react-router-dom';
 import SingleProduct from './SingleProduct';
 import { useState, useEffect } from 'react';
+import Testimonial from './Testimonial';
+import axios from 'axios';
 
 function Home() {
 
     const [products, setProducts] = useState([]);
+    const baseUrl = "http://127.0.0.1:8000/api/"
+    const [ReviewData, setReviewData] = useState([]);
+
+    useEffect(() => {
+        fetchData(baseUrl + 'productrating/')
+    }, [])
+    const fetchData = (url) => {
+        axios.get(url)
+            .then(function (response) {
+                setReviewData(response.data.results);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+    console.log(ReviewData);
+
 
     useEffect(() => {
         fetch('http://127.0.0.1:8000/api/products/?fetch_limit=4')
@@ -184,7 +203,7 @@ function Home() {
                 <div className='d-flex align-items-center justify-content-between'>
                     <h3 className='mb-4'>Propular Sellers
                     </h3>
-                    <a href='#' className='mb-4 float-end btn btn-dark'>View All Sellers <i className="fa-solid fa-arrow-right px-1"></i></a>
+                    <Link to="/sellers" className='mb-4  btn  btn-dark text-md-end'>View All Sellers <i className="fa-solid fa-arrow-right px-1"></i></Link>
                 </div>
                 <div className='row mb-4'>
                     <div className='col-12 col-md-3 mb-4'>
@@ -238,58 +257,22 @@ function Home() {
 
                 {/* ratting and reviews start*/}
 
-                <div id="carouselExampleIndicators" className="carousel slide my-4 p-5 bg-dark text-white">
+                <div id="Review_carousel" className="carousel slide my-4 p-5 border bg-dark text-white" data-bs-ride='true'>
                     <div className="carousel-indicators">
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        {
+                            ReviewData && ReviewData.map((review, index) => <button type="button" data-bs-target="#Review_carousel" data-bs-slide-to={index} className="active" aria-current="true" aria-label={index}></button>)
+                        }
                     </div>
                     <div className="carousel-inner">
-                        <div className="carousel-item active">
-                            <figure className="text-center">
-                                <blockquote className="blockquote">
-                                    <p>A well-known quote, contained in a blockquote element.</p>
-                                </blockquote>
-                                <figcaption className="blockquote-footer">
-                                    <i class="fa-solid fa-star text-warning"></i>
-                                    <i class="fa-solid fa-star text-warning"></i>
-                                    <i class="fa-solid fa-star text-warning"></i>
-                                    <i class="fa-solid fa-star text-warning"></i> <cite title="customer name">customer name</cite>
-                                </figcaption>
-                            </figure>
-                        </div>
-                        <div className="carousel-item">
-                            <figure className="text-center">
-                                <blockquote className="blockquote">
-                                    <p>A well-known quote, contained in a blockquote element.</p>
-                                </blockquote>
-                                <figcaption className="blockquote-footer">
-                                    <i class="fa-solid fa-star text-warning"></i>
-                                    <i class="fa-solid fa-star text-warning"></i>
-                                    <i class="fa-solid fa-star text-warning"></i>
-                                    <i class="fa-solid fa-star text-warning"></i> <cite title="customer name">customer name</cite>
-                                </figcaption>
-                            </figure>
-                        </div>
-                        <div className="carousel-item">
-                            <figure className="text-center">
-                                <blockquote className="blockquote">
-                                    <p>A well-known quote, contained in a blockquote element.</p>
-                                </blockquote>
-                                <figcaption className="blockquote-footer">
-                                    <i class="fa-solid fa-star text-warning"></i>
-                                    <i class="fa-solid fa-star text-warning"></i>
-                                    <i class="fa-solid fa-star text-warning"></i>
-                                    <i class="fa-solid fa-star text-warning"></i> <cite title="customer name">customer name</cite>
-                                </figcaption>
-                            </figure>
-                        </div>
+                        {
+                            ReviewData && ReviewData.map((review, index) => <Testimonial index={index} item={review} />)
+                        }
                     </div>
-                    <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                    <button className="carousel-control-prev" type="button" data-bs-target="#Review_carousel" data-bs-slide="prev">
                         <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span className="visually-hidden">Previous</span>
                     </button>
-                    <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                    <button className="carousel-control-next" type="button" data-bs-target="#Review_carousel" data-bs-slide="next">
                         <span className="carousel-control-next-icon" aria-hidden="true"></span>
                         <span className="visually-hidden">Next</span>
                     </button>

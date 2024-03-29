@@ -1,6 +1,28 @@
 import SellerSidebar from "./SellerSidebar";
-
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 function SellerDashboard() {
+    const [VendorData, setVendorData] = useState({
+        'totalProducts': '',
+        'totalOrders': '',
+        'totalCustomers': ''
+    });
+
+    const baseurl = 'http://127.0.0.1:8000/api/'
+    const vendor_id = localStorage.getItem('vendor_id');
+    useEffect(() => {
+        fetchData(baseurl + 'vendor/' + vendor_id + '/dashboard/');
+    }, []);
+
+
+
+    function fetchData(baseurl) {
+        fetch(baseurl)
+            .then(response => response.json())
+            .then(data => {
+                setVendorData(data);
+            })
+    }
     return (
         <div>
             <div className="container mt-5">
@@ -16,7 +38,7 @@ function SellerDashboard() {
                                         <div className="card-body text-center">
                                             <h4>Total Product</h4>
                                             <h4>
-                                                <a href="#">23</a>
+                                                <Link to={'/seller/sellerProducts'}>{VendorData.totalProducts}</Link>
                                             </h4>
                                         </div>
                                     </div>
@@ -28,7 +50,7 @@ function SellerDashboard() {
                                         <div className="card-body text-center">
                                             <h4>Total Orders</h4>
                                             <h4>
-                                                <a href="#">123</a>
+                                                <Link to={'/seller/VendorOrders'}>{VendorData.totalOrders}</Link>
                                             </h4>
                                         </div>
                                     </div>
@@ -40,7 +62,7 @@ function SellerDashboard() {
                                         <div className="card-body text-center">
                                             <h4>Total Customer</h4>
                                             <h4>
-                                                <a href="#">123</a>
+                                                <Link to={'/seller/Customer'}>{VendorData.totalCustomers}</Link>
                                             </h4>
                                         </div>
                                     </div>

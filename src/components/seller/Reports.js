@@ -1,4 +1,5 @@
 import SellerSidebar from "./SellerSidebar";
+import { Link } from "react-router-dom";
 
 function Reports() {
     return (
@@ -16,7 +17,7 @@ function Reports() {
                                         <div className="card-body text-center">
                                             <h4>Daily</h4>
                                             <h4>
-                                                <a className="btn btn-info text-white" href="#">View</a>
+                                                <Link to={'/seller/daily-report'} className="btn btn-info text-white" >View</Link>
                                             </h4>
                                         </div>
                                     </div>
@@ -28,7 +29,7 @@ function Reports() {
                                         <div className="card-body text-center">
                                             <h4>Monthly</h4>
                                             <h4>
-                                                <a className="btn btn-info text-white" href="#">View</a>
+                                                <Link to={'/seller/monthly-report'} className="btn btn-info text-white" >View</Link>
                                             </h4>
                                         </div>
                                     </div>
@@ -40,7 +41,7 @@ function Reports() {
                                         <div className="card-body text-center">
                                             <h4>Yearly</h4>
                                             <h4>
-                                                <a className="btn btn-info text-white" href="#">View</a>
+                                                <Link to={'/seller/yearly-report'} className="btn btn-info text-white" >View</Link>
                                             </h4>
                                         </div>
                                     </div>

@@ -1,7 +1,41 @@
 import SellerSidebar from "./SellerSidebar";
 import { Link } from "react-router-dom";
-
+import { useState, useEffect } from "react";
 function Customer() {
+    const baseurl = 'http://127.0.0.1:8000/api/'
+    const [CustomerList, setCustomerList] = useState([]);
+    const vendor_id = localStorage.getItem('vendor_id');
+    useEffect(() => {
+        fetchData(baseurl + 'vendor/' + vendor_id + '/customers/');
+    }, []);
+
+
+
+    function fetchData(baseurl) {
+        fetch(baseurl)
+            .then(response => response.json())
+            .then(data => {
+                setCustomerList(data.results);
+            })
+    }
+
+    const ShowConfirm = (customer_id) => {
+        var deleteConfirm = window.confirm("Are you sure you want to delete?");
+        if (deleteConfirm) {
+            fetch(baseurl + 'delete-customer-order/' + customer_id,
+                {
+                    method: 'DELETE'
+                }
+            )
+                .then(response => {
+                    if (response.bool == true) {
+                        fetchData(baseurl + 'seller/customer/' + customer_id + '/orderitmes');
+                    }
+                })
+        }
+    }
+
+
     return (
         <div>
             <div className="container mt-5">
@@ -22,29 +56,20 @@ function Customer() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Jhon Deo</td>
-                                        <td>jhondeo@gmail.com</td>
-                                        <td>012234576</td>
-                                        <td>
-
-                                            <button className="btn btn-primary btn-sm">Orders</button>
-                                            <button className="btn btn-danger btn-sm ms-1">removed from list</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                                <tbody>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Alex Deo</td>
-                                        <td>alexdeo@gmail.com</td>
-                                        <td>1445294926</td>
-                                        <td>
-                                            <button className="btn btn-primary btn-sm">Orders</button>
-                                            <button className="btn btn-danger btn-sm ms-1">removed from list</button>
-                                        </td>
-                                    </tr>
+                                    {
+                                        CustomerList.map((customer, index) => (
+                                            <tr key={customer.order.customer}>
+                                                <td>{index + 1}</td>
+                                                <td>{customer.user.username}</td>
+                                                <td>{customer.user.email}</td>
+                                                <td>{customer.customer.phone}</td>
+                                                <td>
+                                                    <Link to={`/seller/customer/${customer.customer.id}/orderitems/`} className="btn btn-primary btn-sm">Orders ({CustomerList.length})</Link>
+                                                    <button onClick={() => ShowConfirm(customer.customer.id)} className="btn btn-danger btn-sm ms-1">removed from list</button>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    }
                                 </tbody>
                             </table>
                         </div>
