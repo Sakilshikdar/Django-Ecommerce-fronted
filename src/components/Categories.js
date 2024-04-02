@@ -45,10 +45,10 @@ function Categories() {
                             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCRKguaNZrVn6-NK9Ir6VdZf7PoRwLStgLLgsoSMq9ZA&s" className="card-img-top" alt={category.title} />
                             <div className="card-body shadow">
                                 <h4 className="card-title">
-                                    <Link to={`/category/${category.title}/${category.id}`}>{category.title}</Link>
+                                    <Link to={`/category/${category.title}/${category.id}`}>Title: {category.title}</Link>
                                 </h4>
                                 <div className="card-footer">
-                                    Product Downloads: 100
+                                    Total Download: {category.total_downloads}
                                 </div>
                             </div>
                         </div>

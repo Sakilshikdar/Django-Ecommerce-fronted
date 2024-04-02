@@ -43,7 +43,6 @@ function WishList() {
             .catch(function (error) {
                 console.log(error);
             });
-
     }
     return (
         <div>
@@ -69,7 +68,7 @@ function WishList() {
                                             return (
                                                 <tr id={`row${item.id}`} key={index}>
                                                     <td>{index + 1}</td>
-                                                    <td> <img src={item.product.product_imgs[0].image} className="image-thumbnail" width={60} alt="..." /> {item.product.title}</td>
+                                                    <td> <img src={item.product.image} className="image-thumbnail" width={60} alt="..." /> {item.product.title}</td>
                                                     <td>
                                                         {
                                                             CurrencyDate != 'usd' &&

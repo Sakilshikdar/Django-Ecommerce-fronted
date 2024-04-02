@@ -4,6 +4,9 @@ import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { UserContext, CartContext, CurrencyContext } from '../Context';
 import axios from "axios";
+import OwlCarousel from 'react-owl-carousel';
+import 'owl.carousel/dist/assets/owl.carousel.css';
+import 'owl.carousel/dist/assets/owl.theme.default.css';
 
 
 function ProductDetails() {
@@ -196,7 +199,14 @@ function ProductDetails() {
     }
 
 
+    const imgStyle = {
+        width: '100%',
+        height: '20vw',
+        objectfit: 'contain',
+        padding: '20px',
+        background: '#f9f9f9'
 
+    }
 
     return (
         <div className="container mt-4">
@@ -223,14 +233,14 @@ function ProductDetails() {
                                     if (index === 0) {
                                         return <div className="carousel-item active">
                                             <div className="row mb-5">
-                                                <img src={img.image} className="card-img p-3 bg-light" alt="..." />
+                                                <img style={imgStyle} src={img.image} className="card-img p-3 bg-light" alt="..." />
                                             </div>
                                         </div>
                                     }
                                     else {
                                         return <div className="carousel-item">
                                             <div className="row mb-5">
-                                                <img src={img.image} className="card-img p-3" alt="..." />
+                                                <img style={imgStyle} src={img.image} className="card-img p-3" alt="..." />
                                             </div>
                                         </div>
                                     }
@@ -305,49 +315,19 @@ function ProductDetails() {
 
 
             {/* related prodcuts start*/}
-            {
-                relatedProduct.length > 0 &&
+            {relatedProduct.length > 0 &&
                 <>
-                    <h3 className="mt-5 text-center">Related Products</h3>
-                    <div id="related_products" className="carousel carousel-dark slide  text-white" data-bs-ride="true">
-                        <div className="carousel-indicators">
-
-                            {
-                                relatedProduct.map((product, index) => {
-                                    if (index === 0) {
-                                        return <button type="button" data-bs-target="#product_image" data-bs-slide-to={index} className="active" aria-current="true" aria-label="Slide 1"></button>
-                                    }
-                                    else {
-                                        return <button type="button" data-bs-target="#product_image" data-bs-slide-to={index} aria-label={`Slide ${index + 1}`}></button>
-                                    }
-                                })
-                            }
-                        </div>
-                        <div className="carousel-inner">
-                            {
-                                relatedProduct.map((product, index) => {
-                                    if (index === 0) {
-                                        return <div className="carousel-item active">
-                                            <div className="row mb-5">
-                                                <SingleRelatedProduct key={index} product={product} />
-                                            </div>
-                                        </div>
-                                    }
-                                    else {
-                                        return <div className="carousel-item">
-                                            <div className="row mb-5">
-                                                <SingleRelatedProduct key={index} product={product} />
-                                            </div>
-                                        </div>
-                                    }
-                                })
-                            }
-                            <div className="carousel-item active">
-                                <div className="row mb-5">
-                                </div>
+                    <h3 className="mt-4 mt-4 text-center">Related Products</h3>
+                    <OwlCarousel className='owl-theme' items={5} loop margin={10} >
+                        {relatedProduct.map((product, index) => {
+                            return <div class='item'>
+                                <SingleRelatedProduct key={index} product={product} />
                             </div>
-                        </div>
-                    </div>
+                        }
+
+                        )
+                        }
+                    </OwlCarousel>
                 </>
             }
 

@@ -3,16 +3,59 @@ import SingleProduct from './SingleProduct';
 import { useState, useEffect } from 'react';
 import Testimonial from './Testimonial';
 import axios from 'axios';
+import SingleSeller from './seller/SingleSeller';
 
 function Home() {
 
+    const imgStyle = {
+        width: '100%',
+        height: '20vw',
+        objectfit: 'contain',
+        padding: '20px',
+        background: '#f9f9f9'
+
+    }
     const [products, setProducts] = useState([]);
     const baseUrl = "http://127.0.0.1:8000/api/"
     const [ReviewData, setReviewData] = useState([]);
+    const [VendorList, setVendorList] = useState([]);
+    const [PropularProduct, setPropularProduct] = useState([]);
+    const [PropularCategoryProduct, setPropularCategoryProduct] = useState([]);
 
     useEffect(() => {
         fetchData(baseUrl + 'productrating/')
+        fetchPropularVendors(baseUrl + 'vendors/?fetch_limit=4');
+        fetchPropularProduct(baseUrl + 'products/?propular=4');
+        fetchPropularCategoryProduct(baseUrl + 'catagories/?propular=4');
     }, [])
+
+    const fetchPropularVendors = (url) => {
+        axios.get(url)
+            .then(function (response) {
+                setVendorList(response.data.results);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+    const fetchPropularCategoryProduct = (url) => {
+        axios.get(url)
+            .then(function (response) {
+                setPropularCategoryProduct(response.data.results);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+    const fetchPropularProduct = (url) => {
+        axios.get(url)
+            .then(function (response) {
+                setPropularProduct(response.data.results);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
     const fetchData = (url) => {
         axios.get(url)
             .then(function (response) {
@@ -22,8 +65,6 @@ function Home() {
                 console.log(error);
             });
     }
-    console.log(ReviewData);
-
 
     useEffect(() => {
         fetch('http://127.0.0.1:8000/api/products/?fetch_limit=4')
@@ -35,7 +76,6 @@ function Home() {
                 console.error('Error fetching data:', error);
             })
     }, []); // Empty dependency array means the effect runs only once on mount
-
 
 
 
@@ -67,50 +107,22 @@ function Home() {
                     <Link to='/catagories' className='mb-4  btn  btn-dark'>View All Categories <i className="fa-solid fa-arrow-right px-1"></i></Link>
                 </div>
                 <div className='row mb-4'>
-                    <div className='col-12 col-md-3 mb-4'>
-                        <div className="card">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCRKguaNZrVn6-NK9Ir6VdZf7PoRwLStgLLgsoSMq9ZA&s" className="card-img-top" alt="..." />
-                            <div className="card-body shadow">
-                                <h4 className="card-title">Category title</h4>
-                                <div className="card-footer">
-                                    Product Downloads: 23242
+                    {
+                        PropularCategoryProduct.map((category, index) => {
+                            return <div className='col-12 col-md-3 mb-4'>
+                                <div className="card">
+                                    <img style={imgStyle} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCRKguaNZrVn6-NK9Ir6VdZf7PoRwLStgLLgsoSMq9ZA&s" className="card-img-top" alt="..." />
+                                    <div className="card-body shadow">
+                                        <h4 className="card-title">Title: {category.title}</h4>
+                                        <div className="card-footer">Total Download:
+                                            {category.total_downloads}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div className='col-12 col-md-3 mb-4'>
-                        <div className="card">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCRKguaNZrVn6-NK9Ir6VdZf7PoRwLStgLLgsoSMq9ZA&s" className="card-img-top" alt="..." />
-                            <div className="card-body shadow">
-                                <h4 className="card-title">Category title</h4>
-                                <div className="card-footer">
-                                    Product Downloads: 23242
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className='col-12 col-md-3 mb-4'>
-                        <div className="card">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCRKguaNZrVn6-NK9Ir6VdZf7PoRwLStgLLgsoSMq9ZA&s" className="card-img-top" alt="..." />
-                            <div className="card-body shadow">
-                                <h4 className="card-title">Category title</h4>
-                                <div className="card-footer">
-                                    Product Downloads: 23242
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className='col-12 col-md-3 mb-4'>
-                        <div className="card">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCRKguaNZrVn6-NK9Ir6VdZf7PoRwLStgLLgsoSMq9ZA&s" className="card-img-top" alt="..." />
-                            <div className="card-body shadow">
-                                <h4 className="card-title">Category title</h4>
-                                <div className="card-footer">
-                                    Product Downloads: 23242
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        })
+
+                    }
                 </div>
                 {/* propular category end */}
 
@@ -121,77 +133,16 @@ function Home() {
                 <div className='d-flex align-items-center justify-content-between'>
                     <h3 className='mb-4'>Propular Products
                     </h3>
-                    <a href='#' className='mb-4  btn  btn-dark'>View All Products <i className="fa-solid fa-arrow-right px-1"></i></a>
+                    <Link to="/products" className='mb-4  btn  btn-dark text-md-end'>View All Products <i className="fa-solid fa-arrow-right px-1"></i></Link>
                 </div>
                 <div className='row mb-4'>
-                    <div className='col-12 col-md-3 mb-4'>
-                        <div className="card">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCRKguaNZrVn6-NK9Ir6VdZf7PoRwLStgLLgsoSMq9ZA&s" className="card-img-top" alt="..." />
-                            <div className="card-body shadow">
-                                <h4 className="card-title">Product title</h4>
-                                <h5 className="card-title text-muted">Price: 200$</h5>
-                                <div className="card-footer">
-                                    <button title='add to card' className='btn btn-success btn-sm'>
-                                        <i className="fa-solid fa-cart-shopping "></i>
-                                    </button>
-                                    <button title='add to whishlist' className='btn btn-success btn-danger  btn-sm ms-1'>
-                                        <i className="fa fa-heart "></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className='col-12 col-md-3 mb-4'>
-                        <div className="card">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCRKguaNZrVn6-NK9Ir6VdZf7PoRwLStgLLgsoSMq9ZA&s" className="card-img-top" alt="..." />
-                            <div className="card-body shadow">
-                                <h4 className="card-title">Product title</h4>
-                                <h5 className="card-title text-muted">Price: 200$</h5>
-                                <div className="card-footer">
-                                    <button title='add to card' className='btn btn-success btn-sm'>
-                                        <i className="fa-solid fa-cart-shopping "></i>
-                                    </button>
-                                    <button title='add to whishlist' className='btn btn-success btn-danger  btn-sm ms-1'>
-                                        <i className="fa fa-heart "></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className='col-12 col-md-3 mb-4'>
-                        <div className="card">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCRKguaNZrVn6-NK9Ir6VdZf7PoRwLStgLLgsoSMq9ZA&s" className="card-img-top" alt="..." />
-                            <div className="card-body shadow">
-                                <h4 className="card-title">Product title</h4>
-                                <h5 className="card-title text-muted">Price: 200$</h5>
-                                <div className="card-footer">
-                                    <button title='add to card' className='btn btn-success btn-sm'>
-                                        <i className="fa-solid fa-cart-shopping "></i>
-                                    </button>
-                                    <button title='add to whishlist' className='btn btn-success btn-danger  btn-sm ms-1'>
-                                        <i className="fa fa-heart "></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className='col-12 col-md-3 mb-4'>
-                        <div className="card">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCRKguaNZrVn6-NK9Ir6VdZf7PoRwLStgLLgsoSMq9ZA&s" className="card-img-top" alt="..." />
-                            <div className="card-body shadow">
-                                <h4 className="card-title">Product title</h4>
-                                <h5 className="card-title text-muted">Price: 200$</h5>
-                                <div className="card-footer">
-                                    <button title='add to card' className='btn btn-success btn-sm'>
-                                        <i className="fa-solid fa-cart-shopping "></i>
-                                    </button>
-                                    <button title='add to whishlist' className='btn btn-success btn-danger  btn-sm ms-1'>
-                                        <i className="fa fa-heart "></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {
+                        PropularProduct.map((product, index) => {
+                            return <SingleProduct key={index} product={product} />
+                        })
+
+                    }
+
 
 
                 </div>
@@ -206,50 +157,12 @@ function Home() {
                     <Link to="/sellers" className='mb-4  btn  btn-dark text-md-end'>View All Sellers <i className="fa-solid fa-arrow-right px-1"></i></Link>
                 </div>
                 <div className='row mb-4'>
-                    <div className='col-12 col-md-3 mb-4'>
-                        <div className="card">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCRKguaNZrVn6-NK9Ir6VdZf7PoRwLStgLLgsoSMq9ZA&s" className="card-img-top" alt="..." />
-                            <div className="card-body shadow">
-                                <h4 className="card-title">Saller Name: </h4>
-                                <div className="card-footer">
-                                    Categories: <a href='#'>python</a>, <a href='#'>javascript</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className='col-12 col-md-3 mb-4'>
-                        <div className="card">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCRKguaNZrVn6-NK9Ir6VdZf7PoRwLStgLLgsoSMq9ZA&s" className="card-img-top" alt="..." />
-                            <div className="card-body shadow">
-                                <h4 className="card-title">Saller Name: </h4>
-                                <div className="card-footer">
-                                    Categories: <a href='#'>python</a>, <a href='#'>javascript</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className='col-12 col-md-3 mb-4'>
-                        <div className="card">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCRKguaNZrVn6-NK9Ir6VdZf7PoRwLStgLLgsoSMq9ZA&s" className="card-img-top" alt="..." />
-                            <div className="card-body shadow">
-                                <h4 className="card-title">Saller Name: </h4>
-                                <div className="card-footer">
-                                    Categories: <a href='#'>python</a>, <a href='#'>javascript</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className='col-12 col-md-3 mb-4'>
-                        <div className="card">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCRKguaNZrVn6-NK9Ir6VdZf7PoRwLStgLLgsoSMq9ZA&s" className="card-img-top" alt="..." />
-                            <div className="card-body shadow">
-                                <h4 className="card-title">Saller Name: </h4>
-                                <div className="card-footer">
-                                    Categories: <a href='#'>python</a>, <a href='#'>javascript</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {
+                        VendorList.map((seller, index) => {
+                            return <SingleSeller key={index} seller={seller} />
+                        })
+
+                    }
 
                 </div>
                 {/* propular Seller end */}
