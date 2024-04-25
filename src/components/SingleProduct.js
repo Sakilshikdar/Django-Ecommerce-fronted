@@ -144,13 +144,12 @@ function SingleProduct(props) {
 
     const imgStyle = {
         width: '100%',
-        height: '20vw',
+        height: '15vw',
         objectfit: 'contain',
         padding: '20px',
         background: '#f9f9f9'
 
     }
-
     return (
         <div className=" col-12 col-md-3 my-4">
 

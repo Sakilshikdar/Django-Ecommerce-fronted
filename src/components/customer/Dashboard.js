@@ -28,7 +28,7 @@ function Dashboard() {
                 console.error('Error fetching data:', error);
             });
     }
-
+    console.log(CountList);
     return (
         <div>
             <div className="container mt-5">

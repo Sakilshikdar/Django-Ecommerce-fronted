@@ -11,8 +11,19 @@ function Checkout() {
     const [productData, setProductData] = useState({});
 
     var sum = 0;
+    if (cartData == null) {
+        return (
+            <div className="container mt-5">
+                <div className="alert alert-danger">
+                    <h3>Cart is Empty</h3>
+                    <Link to="/products" className="btn btn-success">All Product</Link>
+                </div>
+            </div>
+        )
+    }
     cartData.map((item, index) => {
-        sum += item.product.price;
+        const p = parseInt(item.product.price);
+        sum += p;
     });
 
 
@@ -61,7 +72,7 @@ function Checkout() {
                             </thead>
                             <tbody>
                                 {
-                                    cartData.map((item, index) => {
+                                    cartData.length > 0 && cartData.map((item, index) => {
                                         return (
                                             <tr key={index}>
                                                 <td>{index + 1}</td>
@@ -82,7 +93,7 @@ function Checkout() {
                                 </tr>
                                 <tr>
                                     <td colSpan={3} align="center">
-                                        <Link to="/categories" className="btn btn-secondary"> Continue Shopping </Link>
+                                        <Link to="/catagories" className="btn btn-secondary"> Continue Shopping </Link>
                                         <Link to='/confirm-order' className="btn btn-success ms-2"> Process to Pyment</Link>
                                     </td>
                                 </tr>

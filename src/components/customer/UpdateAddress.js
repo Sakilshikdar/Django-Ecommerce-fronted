@@ -9,13 +9,13 @@ import { useParams } from "react-router-dom";
 function UpdateAddress() {
 
     const baseUrl = "http://127.0.0.1:8000/api"
-    const { address_id } = useParams();
+    const { address_id } = useParams()
     const customer_id = localStorage.getItem('customer_id');
     const [ErrorMsg, setErrorMsg] = useState('');
     const [SuccessMsg, setSuccessMsg] = useState('');
     const [AddressFromData, setAddressFromData] = useState({
         'address': '',
-        'customer': customer_id,
+        'customer': parseInt(customer_id),
     });
 
 
@@ -30,7 +30,6 @@ function UpdateAddress() {
             .then(response => response.json())
             .then(data => {
                 setAddressFromData({ 'address': data.address });
-                // console.log(data);
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
@@ -56,7 +55,6 @@ function UpdateAddress() {
                 } else {
                     setSuccessMsg('Address added successfully');
                     setErrorMsg('');
-                    // Handle unexpected response status
                 }
             }
             )

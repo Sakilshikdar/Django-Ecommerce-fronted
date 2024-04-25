@@ -34,11 +34,7 @@ function OrderRow(props) {
             <td>{index + 1}</td>
             <td>
                 <Link to={`/product/${order.product.slug}/${order.product.id}`}>
-                    <img src={`${baseurl}/${order.product.image}`} className="image-thumbnail" width={60} alt="..." /> Django
-                </Link>
-            </td>
-            <td>
-                <Link to={`/product/${order.product.slug}/${order.product.id}`}>
+                    <img src={`${baseurl}/${order.product.image}`} className="image-thumbnail me-3" width={60} alt="..." />
                     {order.product.title}
                 </Link>
             </td>

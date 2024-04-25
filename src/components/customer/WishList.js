@@ -68,7 +68,12 @@ function WishList() {
                                             return (
                                                 <tr id={`row${item.id}`} key={index}>
                                                     <td>{index + 1}</td>
-                                                    <td> <img src={item.product.image} className="image-thumbnail" width={60} alt="..." /> {item.product.title}</td>
+                                                    <td>
+                                                        <Link to={`/product/${item.product.slug}/${item.product.id}`}>
+                                                            <img src={`${baseurl}${item.product.image}`} className="image-thumbnail me-3" width={60} alt="..." />
+                                                            {item.product.title}
+                                                        </Link>
+                                                    </td>
                                                     <td>
                                                         {
                                                             CurrencyDate != 'usd' &&

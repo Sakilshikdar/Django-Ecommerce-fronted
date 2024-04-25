@@ -6,6 +6,7 @@ import { useEffect } from "react";
 
 
 function UpdateProfile() {
+    const [error, setError] = useState('');
     const [ProfileData, setProfileData] = useState({
         'user_id': '',
         'first_name': '',
@@ -27,6 +28,7 @@ function UpdateProfile() {
         fetch(baseurl)
             .then(response => response.json())
             .then(data => {
+                console.log(data);
                 setProfileData({
                     'user_id': data.user.id,
                     'first_name': data.user.first_name,
@@ -58,14 +60,22 @@ function UpdateProfile() {
         const formData = new FormData();
         formData.append('user', ProfileData.user_id);
         formData.append('phone', ProfileData.phone);
-        formData.append('profile_image', ProfileData.p_image);
+        // formData.append('profile_img', ProfileData.p_image);
+        if (ProfileData.p_image instanceof File) {
+            formData.append('profile_img', ProfileData.p_image);
+        }
         axios.put(baseUrl + '/customer/' + customer_id + '/', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         })
             .then(function (response) {
-                console.log(response);
+                if (response.status === 200) {
+                    alert('Profile Updated Successfully');
+                }
+                setTimeout(() => {
+                    window.location.reload()
+                }, 500);
             }
             )
             .catch(function (error) {
@@ -78,7 +88,7 @@ function UpdateProfile() {
         formUserData.append('email', ProfileData.email);
         formUserData.append('username', ProfileData.username);
 
-        axios.put(baseUrl + '/user/' + ProfileData.user_id, formUserData)
+        axios.put(baseUrl + '/user/' + ProfileData.user_id + '/', formUserData)
             .then(function (response) {
                 console.log(response);
             }
@@ -87,7 +97,7 @@ function UpdateProfile() {
                 console.log(error);
             });
     }
-
+    console.log(error);
     return (
 
         <div>
@@ -124,6 +134,7 @@ function UpdateProfile() {
                                     <input name="email" onChange={inputHandeler} value={ProfileData.email} type="email" className="form-control" id='email' placeholder="Enter email" />
                                 </div>
                                 <div className="form-group mb-3">
+                                    {error && <div className="text-danger mb-2">{error}</div>}
                                     <label for="phone">Phone</label>
                                     <input name="phone" onChange={inputHandeler} value={ProfileData.phone} type="number" className="form-control" id='phone' placeholder="Enter phone" />
                                 </div>

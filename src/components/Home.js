@@ -9,7 +9,7 @@ function Home() {
 
     const imgStyle = {
         width: '100%',
-        height: '20vw',
+        height: '15vw',
         objectfit: 'contain',
         padding: '20px',
         background: '#f9f9f9'
@@ -111,7 +111,7 @@ function Home() {
                         PropularCategoryProduct.map((category, index) => {
                             return <div className='col-12 col-md-3 mb-4'>
                                 <div className="card">
-                                    <img style={imgStyle} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCRKguaNZrVn6-NK9Ir6VdZf7PoRwLStgLLgsoSMq9ZA&s" className="card-img-top" alt="..." />
+                                    <img style={imgStyle} src={category.cat_img} className="card-img-top" alt="..." />
                                     <div className="card-body shadow">
                                         <h4 className="card-title">Title: {category.title}</h4>
                                         <div className="card-footer">Total Download:

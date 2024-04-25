@@ -31,7 +31,7 @@ function Header() {
                             <Link className="nav-link" aria-current="page" to="/">Home</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" aria-current="page" to="/categories">Categories</Link>
+                            <Link className="nav-link" aria-current="page" to="/catagories">Categories</Link>
                         </li>
 
 
@@ -78,9 +78,7 @@ function Header() {
                         </li>
 
 
-                        <li className="nav-item">
-                            <Link className="nav-link" aria-current="page" to="/Checkout">New Orders (4) </Link>
-                        </li>
+
                         <li className="nav-item">
                             <Link className="nav-link" aria-current="page" to="/Checkout">My Cart ({(cartData == null ? 0 : cartData.length)})</Link>
                         </li>

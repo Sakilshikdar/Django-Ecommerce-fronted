@@ -45,7 +45,7 @@ function AllProducts() {
 
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
-                    {links}
+                    {/* {links} */}
                 </ul>
             </nav>
         </section>

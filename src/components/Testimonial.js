@@ -22,7 +22,7 @@ function Testimonial(props) {
         <div className={`carousel-item ${_class}`}>
             <figure className="text-center">
                 <blockquote className="blockquote">
-                    <p>A well-known quote, contained in a blockquote element.</p>
+                    <p>{item.reviews}</p>
                 </blockquote>
                 <figcaption className="blockquote-footer">
                     {

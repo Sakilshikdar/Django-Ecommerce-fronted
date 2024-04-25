@@ -15,18 +15,17 @@ function Orders() {
         fetchData(baseurl + `customer/` + customer_id + `/orderitems/`);
     }, []);
 
+
     function fetchData(baseurl) {
         fetch(baseurl)
             .then(response => response.json())
             .then(data => {
-                console.log(data.results);
                 setOrders(data.results);
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
             });
     }
-
     return (
         <div>
             <div className="container mt-5">

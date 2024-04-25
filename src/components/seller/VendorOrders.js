@@ -24,6 +24,7 @@ function VendorOrders() {
     }
 
     const changeStatus = (order_id, status) => {
+        console.log(order_id, status);
         fetch(baseurl + 'order-modify/' + order_id + '/', {
             method: 'PATCH',
             headers: {

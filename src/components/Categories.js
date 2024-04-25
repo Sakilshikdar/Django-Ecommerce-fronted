@@ -42,7 +42,7 @@ function Categories() {
                 {categories.map((category) => (
                     <div key={category.id} className='col-12 col-md-3 mb-4'>
                         <div className="card">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCRKguaNZrVn6-NK9Ir6VdZf7PoRwLStgLLgsoSMq9ZA&s" className="card-img-top" alt={category.title} />
+                            <img src={category.cat_img} className="card-img-top" alt={category.title} />
                             <div className="card-body shadow">
                                 <h4 className="card-title">
                                     <Link to={`/category/${category.title}/${category.id}`}>Title: {category.title}</Link>
@@ -59,7 +59,7 @@ function Categories() {
 
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
-                    {links}
+                    {/* {links} */}
                 </ul>
             </nav>
 

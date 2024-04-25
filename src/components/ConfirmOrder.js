@@ -36,6 +36,7 @@ function ConfirmOrder() {
         axios.post(baseurl + 'orders/', formData)
             .then(function (response) {
                 var orderid = response.data.id;
+                console.log(response.data, orderId);
                 orderitems(orderid);
                 setConfirmOrder(true);
                 setOrderId(orderid);
@@ -46,6 +47,7 @@ function ConfirmOrder() {
     }
 
     function orderitems(orderId) {
+        console.log(orderId);
         var previousCart = localStorage.getItem('cartData');
         var cartJson = JSON.parse(previousCart);
 
@@ -68,12 +70,9 @@ function ConfirmOrder() {
             })
         }
 
-
     }
 
-    if (!userContext) {
-        window.location.href = '/customer/login';
-    }
+
 
 
     function changePymentMethon(paymethod) {
