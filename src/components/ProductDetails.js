@@ -282,9 +282,7 @@ function ProductDetails() {
                             </button>
 
                         }
-                        <button title='add to card' className='btn btn-success ms-2'><i class="fa-solid fa-bag-shopping me-1"></i>Buy Now
 
-                        </button>
                         {
                             (userContext && ProductInWishlist) &&
                             <button title='add to whishlist' className='btn btn-success btn-danger btn-sm ms-2 disabled'>
@@ -315,7 +313,8 @@ function ProductDetails() {
 
 
             {/* related prodcuts start*/}
-            {relatedProduct.length > 0 &&
+            {
+                relatedProduct.length > 0 &&
                 <>
                     <h3 className="mt-4 mt-4 text-center">Related Products</h3>
                     <OwlCarousel className='owl-theme' items={5} loop margin={10} >

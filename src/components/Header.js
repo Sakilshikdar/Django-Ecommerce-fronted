@@ -20,7 +20,9 @@ function Header() {
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-success">
             <div className="container">
-                <a class="navbar-brand" href="#">Navbar</a>
+                <h1>
+                    <Link to={"/"} class="navbar-brand" >Ecommerce Shop</Link>
+                </h1>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>

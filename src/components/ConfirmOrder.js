@@ -135,12 +135,6 @@ function ConfirmOrder() {
                                     <input type='radio' onChange={() => changePymentMethon('paypal')} name='payMethod' />  Paypal
                                 </label>
                             </div>
-                            <div className='form-group'>
-                                <label><input type='radio' onChange={() => changePymentMethon('stripe')} name='payMethod' /> Stripe </label>
-                            </div>
-                            <div className='form-group'>
-                                <label> <input onChange={() => changePymentMethon('razorpay')} type='radio' name='payMethod' /> RazorPay</label>
-                            </div>
                             {/* button */}
                             {PayMethod != 'paypal' &&
                                 <button type='button' onClick={payNow} className='mt-3 btn btn-success btn-sm w-25 hidden'>Pay Now</button>
