@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import Testimonial from './Testimonial';
 import axios from 'axios';
 import SingleSeller from './seller/SingleSeller';
+import Banner from './Banner';
+
 
 function Home() {
 
@@ -82,6 +84,7 @@ function Home() {
     return (
         <main className=' mt-4'>
             <div className='container'>
+                <Banner />
                 {/* leatest products start */}
                 <div className='d-flex align-items-center justify-content-between'>
                     <h3 className='mb-4 '>Latest Products

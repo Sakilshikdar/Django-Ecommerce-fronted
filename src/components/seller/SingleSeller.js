@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import { useContext } from "react";
 function SingleSeller(props) {
+    console.log(props.product);
     if (!props.seller.profile_img) {
         const logo = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCRKguaNZrVn6-NK9Ir6VdZf7PoRwLStgLLgsoSMq9ZA&s'
-        props.product.image = logo
+        props.seller.profile_img = logo
     }
     const imgStyle = {
         width: '100%',
