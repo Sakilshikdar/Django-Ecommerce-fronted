@@ -30,21 +30,21 @@ function Header() {
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li className="nav-item">
-                            <Link className="nav-link" aria-current="page" to="/">Home</Link>
+                            <Link className="nav-link text-white" aria-current="page" to="/">Home</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" aria-current="page" to="/catagories">Categories</Link>
+                            <Link className="nav-link text-white" aria-current="page" to="/catagories ">Categories</Link>
                         </li>
 
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 My Account
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 {!userContext ?
                                     <>
-                                        <Link to='/customer/register' className="dropdown-item" >Register</Link>
+                                        <Link to='/customer/register' className=" dropdown-item" >Register</Link>
                                         <Link to='/customer/login' className="dropdown-item" >Login</Link>
                                     </>
                                     :
@@ -58,7 +58,7 @@ function Header() {
 
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="text-white nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Saller Panel
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -82,7 +82,7 @@ function Header() {
 
 
                         <li className="nav-item">
-                            <Link className="nav-link" aria-current="page" to="/Checkout">My Cart ({(cartData == null ? 0 : cartData.length)})</Link>
+                            <Link className="nav-link text-white" aria-current="page" to="/Checkout text-white ">My Cart ({(cartData == null ? 0 : cartData.length)})</Link>
                         </li>
 
                         <li className='nav-item'>
