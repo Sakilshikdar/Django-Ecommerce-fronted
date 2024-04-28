@@ -82,7 +82,7 @@ function Header() {
 
 
                         <li className="nav-item">
-                            <Link className="nav-link text-white" aria-current="page" to="/Checkout text-white ">My Cart ({(cartData == null ? 0 : cartData.length)})</Link>
+                            <Link className="nav-link text-white" aria-current="page" to="/Checkout">My Cart ({(cartData == null ? 0 : cartData.length)})</Link>
                         </li>
 
                         <li className='nav-item'>
