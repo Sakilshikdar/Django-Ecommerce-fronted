@@ -2,7 +2,7 @@ import SellerSidebar from "./SellerSidebar";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 function Customer() {
-    const baseurl = 'http://127.0.0.1:8000/api/'
+    const baseurl = 'https://django-ecommerce-backend.onrender.com/api/'
     const [CustomerList, setCustomerList] = useState([]);
     const vendor_id = localStorage.getItem('vendor_id');
     useEffect(() => {
@@ -49,7 +49,7 @@ function Customer() {
                             <table className="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <tr>#</tr>
+                                        <tr>No</tr>
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Mobile</th>

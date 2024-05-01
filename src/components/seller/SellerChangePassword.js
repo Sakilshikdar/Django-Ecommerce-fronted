@@ -8,7 +8,7 @@ import axion from 'axios';
 
 
 function SellerChangePassword() {
-    const baseurl = 'http://127.0.0.1:8000/api/'
+    const baseurl = 'https://django-ecommerce-backend.onrender.com/api/'
     const [PasswordData, setPasswordData] = useState({
         'password': '',
         'c_password': ''

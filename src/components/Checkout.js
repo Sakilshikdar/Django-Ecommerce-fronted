@@ -64,7 +64,7 @@ function Checkout() {
                         <table className="table table-bordered">
                             <thead>
                                 <tr>
-                                    <tr>#</tr>
+                                    <tr>No</tr>
                                     <th>Product</th>
                                     <th>Price</th>
                                     <th>Action</th>

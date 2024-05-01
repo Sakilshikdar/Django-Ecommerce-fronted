@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 function Dashboard() {
-    const baseUrl = "http://127.0.0.1:8000/api"
+    const baseUrl = "https://django-ecommerce-backend.onrender.com/api"
     const customer_id = localStorage.getItem('customer_id');
     const [CountList, setCountList] = useState({
         'totalOrders': 0,

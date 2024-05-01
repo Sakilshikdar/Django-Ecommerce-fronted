@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 
 function CustomerOrders() {
 
-    const baseurl = 'http://127.0.0.1:8000/api'
+    const baseurl = 'https://django-ecommerce-backend.onrender.com/api'
     const [OrderItmes, setOrderItems] = useState([]);
     const vendor_id = localStorage.getItem('vendor_id');
     const { customer_id } = useParams()
@@ -60,7 +60,7 @@ function CustomerOrders() {
                             <table className="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <tr>#</tr>
+                                        <tr>No</tr>
                                         <th>Product</th>
                                         <th>Price</th>
                                         <th>Status</th>

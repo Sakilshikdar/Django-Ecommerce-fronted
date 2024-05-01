@@ -7,21 +7,28 @@ function SellerDashboard() {
         'totalOrders': '',
         'totalCustomers': ''
     });
-
-    const baseurl = 'http://127.0.0.1:8000/api/'
+    
+    const baseurl = 'https://django-ecommerce-backend.onrender.com/api/'
     const vendor_id = localStorage.getItem('vendor_id');
     useEffect(() => {
         fetchData(baseurl + 'vendor/' + vendor_id + '/dashboard/');
     }, []);
-
-
-
+    
+    
+    
     function fetchData(baseurl) {
         fetch(baseurl)
             .then(response => response.json())
             .then(data => {
                 setVendorData(data);
             })
+    }
+    if (VendorData.totalProducts === '') {
+        return (
+            <div>
+                <h1 className="text-center my-5">Loading...</h1>
+            </div>
+        )
     }
     return (
         <div>

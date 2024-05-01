@@ -17,7 +17,7 @@ function SellerUpdateProfile() {
     var vendor_id = localStorage.getItem('vendor_id');
 
 
-    const baseUrl = "http://127.0.0.1:8000/api"
+    const baseUrl = "https://django-ecommerce-backend.onrender.com/api"
     useEffect(() => {
         fetchData(baseUrl + '/vendor/' + vendor_id)
     }, []);

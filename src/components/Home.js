@@ -18,11 +18,15 @@ function Home() {
 
     }
     const [products, setProducts] = useState([]);
-    const baseUrl = "http://127.0.0.1:8000/api/"
+    const baseUrl = "https://django-ecommerce-backend.onrender.com/api/"
     const [ReviewData, setReviewData] = useState([]);
     const [VendorList, setVendorList] = useState([]);
     const [PropularProduct, setPropularProduct] = useState([]);
     const [PropularCategoryProduct, setPropularCategoryProduct] = useState([]);
+    const [loading, setLoading] = useState(true)
+    const [loading1, setLoading1] = useState(true)
+    const [loading2, setLoading2] = useState(true)
+    const [loading3, setLoading3] = useState(true)
 
     useEffect(() => {
         fetchData(baseUrl + 'productrating/')
@@ -34,42 +38,50 @@ function Home() {
     const fetchPropularVendors = (url) => {
         axios.get(url)
             .then(function (response) {
+                setLoading(false)
                 setVendorList(response.data.results);
             })
             .catch(function (error) {
                 console.log(error);
+                setLoading(true)
             });
     }
     const fetchPropularCategoryProduct = (url) => {
         axios.get(url)
             .then(function (response) {
                 setPropularCategoryProduct(response.data.results);
+                setLoading1(false)
             })
             .catch(function (error) {
                 console.log(error);
+                setLoading1(true)
             });
     }
     const fetchPropularProduct = (url) => {
         axios.get(url)
             .then(function (response) {
+                setLoading2(false)
                 setPropularProduct(response.data.results);
             })
             .catch(function (error) {
                 console.log(error);
+                setLoading2(true)
             });
     }
     const fetchData = (url) => {
         axios.get(url)
             .then(function (response) {
+                setLoading3(false)
                 setReviewData(response.data.results);
             })
             .catch(function (error) {
                 console.log(error);
+                setLoading3(true)
             });
     }
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/api/products/?fetch_limit=4')
+        fetch('https://django-ecommerce-backend.onrender.com/api/products/?fetch_limit=4')
             .then(response => response.json())
             .then(data => {
                 setProducts(data.results);
@@ -79,7 +91,7 @@ function Home() {
             })
     }, []); // Empty dependency array means the effect runs only once on mount
 
-
+    console.log(products);
 
     return (
         <main className=' mt-4'>
@@ -92,6 +104,14 @@ function Home() {
                     <Link to="/products" className='mb-4  btn  btn-dark text-md-end'>View All Products <i className="fa-solid fa-arrow-right px-1"></i></Link>
                 </div>
                 <div className='row mb-4'>
+                    {loading && <>
+                        <div class="text-center my-5">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="">wait</span>
+                            </div>
+                        </div>
+                    </>}
+
 
                     {
                         products.map((product, index) => {
@@ -110,6 +130,13 @@ function Home() {
                     <Link to='/catagories' className='mb-4  btn  btn-dark'>View All Categories <i className="fa-solid fa-arrow-right px-1"></i></Link>
                 </div>
                 <div className='row mb-4'>
+                    {loading1 && <>
+                        <div class="text-center my-5">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="">wait</span>
+                            </div>
+                        </div>
+                    </>}
                     {
                         PropularCategoryProduct.map((category, index) => {
                             return <div className='col-12 col-md-3 mb-4'>
@@ -139,6 +166,13 @@ function Home() {
                     <Link to="/products" className='mb-4  btn  btn-dark text-md-end'>View All Products <i className="fa-solid fa-arrow-right px-1"></i></Link>
                 </div>
                 <div className='row mb-4'>
+                    {loading2 && <>
+                        <div class="text-center my-5">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="">wait</span>
+                            </div>
+                        </div>
+                    </>}
                     {
                         PropularProduct.map((product, index) => {
                             return <SingleProduct key={index} product={product} />
@@ -160,6 +194,13 @@ function Home() {
                     <Link to="/sellers" className='mb-4  btn  btn-dark text-md-end'>View All Sellers <i className="fa-solid fa-arrow-right px-1"></i></Link>
                 </div>
                 <div className='row mb-4'>
+                    {loading && <>
+                        <div class="text-center my-5">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="">wait</span>
+                            </div>
+                        </div>
+                    </>}
                     {
                         VendorList.map((seller, index) => {
                             return <SingleSeller key={index} seller={seller} />
@@ -174,6 +215,13 @@ function Home() {
                 {/* ratting and reviews start*/}
 
                 <div id="Review_carousel" className="carousel slide my-4 p-5 border bg-dark text-white" data-bs-ride='true'>
+                    {loading3 && <>
+                        <div class="text-center my-5">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="">wait</span>
+                            </div>
+                        </div>
+                    </>}
                     <div className="carousel-indicators">
                         {
                             ReviewData && ReviewData.map((review, index) => <button type="button" data-bs-target="#Review_carousel" data-bs-slide-to={index} className="active" aria-current="true" aria-label={index}></button>)

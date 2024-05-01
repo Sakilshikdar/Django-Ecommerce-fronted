@@ -6,7 +6,7 @@ import OrderRow from "./OrderRow";
 
 
 function Orders() {
-    const baseurl = 'http://127.0.0.1:8000/api/'
+    const baseurl = 'https://django-ecommerce-backend.onrender.com/api/'
     const customer_id = localStorage.getItem('customer_id');
     const [orders, setOrders] = useState([]);
 
@@ -38,7 +38,7 @@ function Orders() {
                             <table className="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <tr>#</tr>
+                                        <tr>No</tr>
                                         <th>Product</th>
                                         <th>Price</th>
                                         <th>Status</th>

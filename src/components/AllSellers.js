@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import SingleSeller from "./seller/SingleSeller";
 function AllSellers() {
-    const baseUrl = "http://127.0.0.1:8000/api"
+    const baseUrl = "https://django-ecommerce-backend.onrender.com/api"
     const [SellerList, setSellerList] = useState([]);
     const [totalResult, setTotalResult] = useState(0);
 
@@ -30,6 +30,15 @@ function AllSellers() {
     var links = [];
     for (let i = 1; i <= totalResult; i++) {
         links.push(<li class="page-item"><Link onClick={() => changeUrl(baseUrl + `/vendor/?page=${i}`)} to={`/vendor/?page=${i}`} class="page-link" >{i}</Link></li>);
+    }
+    if (SellerList.length === 0) {
+        return (
+            <div class="text-center my-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="">wait</span>
+                </div>
+            </div>
+        )
     }
     return (
         <section className="container my-4">

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 
 function SellerProducts() {
 
-    const baseUrl = "http://127.0.0.1:8000/api"
+    const baseUrl = "https://django-ecommerce-backend.onrender.com/api"
     // const customer_id = localStorage.getItem('vendor_id');
     const [ProductsList, setProductsList] = useState([]);
 
@@ -57,7 +57,7 @@ function SellerProducts() {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <tr>#</tr>
+                                        <tr>No</tr>
                                         <th>Product</th>
                                         <th>Price</th>
                                         <th>Status</th>

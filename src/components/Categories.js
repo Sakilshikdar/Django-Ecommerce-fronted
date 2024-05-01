@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function Categories() {
 
-    const baseUrl = "http://127.0.0.1:8000/api"
+    const baseUrl = "https://django-ecommerce-backend.onrender.com/api"
     const [categories, setCategories] = useState([]);
     const [totalResult, setTotalResult] = useState(0);
 

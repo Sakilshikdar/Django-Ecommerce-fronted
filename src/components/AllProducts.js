@@ -2,9 +2,10 @@ import SingleProduct from "./SingleProduct";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 function AllProducts() {
-    const baseUrl = "http://127.0.0.1:8000/api"
+    const baseUrl = "https://django-ecommerce-backend.onrender.com/api"
     const [products, setProducts] = useState([]);
     const [totalResult, setTotalResult] = useState(0);
+    const [loading,setLoading ]= useState(true)
 
     useEffect(() => {
         fetchData(baseUrl + `/products/`);
@@ -16,8 +17,10 @@ function AllProducts() {
             .then(data => {
                 setProducts(data.results);
                 setTotalResult(data.count);
+                setLoading(false)
             })
             .catch(error => {
+                setLoading(true)
                 console.error('Error fetching data:', error);
             });
     }
@@ -27,7 +30,9 @@ function AllProducts() {
         fetchData(baseurl);
     }
     var links = [];
-    for (let i = 1; i <= totalResult; i++) {
+    var limite = 2;
+    var totallink = totalResult / limite;
+    for (let i = 1; i <= totallink; i++) {
         links.push(<li class="page-item"><Link onClick={() => changeUrl(baseUrl + `/products/?page=${i}`)} to={`/products/?page=${i}`} class="page-link" >{i}</Link></li>);
     }
     return (
@@ -36,8 +41,17 @@ function AllProducts() {
             </h3>
             <div className='row mb-4'>
                 {
+                    loading&& <>
+                   <div class="text-center my-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="">wait</span>
+                </div>
+            </div>
+                    </>
+                }
+                {
                     products.map((product, index) => {
-                        return <SingleProduct key={index} product={product} />
+                        return <SingleProduct key={index}  product={product} />
                     })
 
                 }
@@ -45,7 +59,7 @@ function AllProducts() {
 
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
-                    {/* {links} */}
+                    {links}
                 </ul>
             </nav>
         </section>

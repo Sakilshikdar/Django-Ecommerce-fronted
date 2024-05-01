@@ -7,8 +7,8 @@ import axios from 'axios';
 
 function OrderRow(props) {
     const { order, index } = props;
-    const baseApiurl = 'http://127.0.0.1:8000/api/'
-    const baseurl = 'http://127.0.0.1:8000'
+    const baseApiurl = 'https://django-ecommerce-backend.onrender.com/api/'
+    const baseurl = '<tr>No</tr>http://127.0.0.1:8000'
     const [TotalDownloads, setTotalDownloads] = useState(order.product.downloads);
 
 

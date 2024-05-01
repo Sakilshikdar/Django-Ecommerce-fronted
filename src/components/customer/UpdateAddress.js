@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 
 function UpdateAddress() {
 
-    const baseUrl = "http://127.0.0.1:8000/api"
+    const baseUrl = "https://django-ecommerce-backend.onrender.com/api"
     const { address_id } = useParams()
     const customer_id = localStorage.getItem('customer_id');
     const [ErrorMsg, setErrorMsg] = useState('');

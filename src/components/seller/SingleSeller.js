@@ -7,7 +7,7 @@ function SingleSeller(props) {
     }
     const imgStyle = {
         width: '100%',
-        height: '17vw',
+        height: '15vw',
         objectfit: 'contain'
 
     }

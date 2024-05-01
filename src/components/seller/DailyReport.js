@@ -4,7 +4,7 @@ import Chart from "react-apexcharts";
 
 function DailyReport() {
 
-    const baseurl = 'http://127.0.0.1:8000/api/'
+    const baseurl = 'https://django-ecommerce-backend.onrender.com/api/'
     const [Dates, setDates] = useState([]);
     const [Data, setData] = useState([])
     function fetch_daily_orders(baseurl) {

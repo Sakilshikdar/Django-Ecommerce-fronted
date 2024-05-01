@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 
 function TagProducts() {
-    const baseUrl = "http://127.0.0.1:8000/api"
+    const baseUrl = "https://django-ecommerce-backend.onrender.com/api"
     const [products, setProducts] = useState([]);
     const [totalResult, setTotalResult] = useState(0);
     const { tag } = useParams();

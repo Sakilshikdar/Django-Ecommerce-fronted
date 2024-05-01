@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 function UpdateProduct() {
     const { product_id } = useParams();
     const vendor_id = (localStorage.getItem('vendor_id'));
-    const baseurl = 'http://127.0.0.1:8000/api/'
+    const baseurl = 'https://django-ecommerce-backend.onrender.com/api/'
     const customer_id = localStorage.getItem('customer_id');
     const [categoryData, setCategoryData] = useState([]);
     const [errorMsg, setErrorMsg] = useState('');

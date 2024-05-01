@@ -6,7 +6,7 @@ import SingleProduct from "../SingleProduct";
 
 
 function SellerDetails() {
-    const baseUrl = "http://127.0.0.1:8000/api"
+    const baseUrl = "https://django-ecommerce-backend.onrender.com/api"
     const [ProductList, setProductList] = useState([]);
     const [VendorData, setVendorData] = useState({
         total_products: 0,

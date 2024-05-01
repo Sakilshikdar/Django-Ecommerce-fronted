@@ -10,7 +10,7 @@ import 'owl.carousel/dist/assets/owl.theme.default.css';
 
 
 function ProductDetails() {
-    const baseUrl = "http://127.0.0.1:8000/api"
+    const baseUrl = "https://django-ecommerce-backend.onrender.com/api"
     const [productData, setProductData] = useState([]);
     const [relatedProduct, setRelatedProduct] = useState([]);
     const [productImgs, setProductImgs] = useState([]);
@@ -22,6 +22,10 @@ function ProductDetails() {
     const [ProductInWishlist, setProductInWishlist] = useState(false);
     const { CurrencyDate } = useContext(CurrencyContext);
     const userContext = useContext(UserContext);
+
+   
+       
+    
 
 
     useEffect(() => {
@@ -124,36 +128,7 @@ function ProductDetails() {
         setCartData(cartJson);
     }
 
-    // function saveInwishList() {
-    //     var previousWishlist = localStorage.getItem('wishlistData');
-    //     var wishlistJson = JSON.parse(previousWishlist);
-    //     var wishlistData =
-    //     {
-    //         'product': {
-    //             'id': productData.id,
-    //             'title': productData.title,
-    //             'price': productData.price,
-    //             'image': productData.product_imgs[0].image,
-    //         },
-    //         'user': {
-    //             'id': 1
-    //         }
-    //     }
 
-    //         ;
-    //     if (wishlistJson) {
-    //         wishlistJson.push(wishlistData);
-    //         var wishlistString = JSON.stringify(wishlistJson);
-    //         localStorage.setItem('wishlistData', wishlistString);
-    //     }
-    //     else {
-    //         var newWishlistList = [];
-    //         newWishlistList.push(wishlistData);
-    //         var wishlistString = JSON.stringify(newWishlistList);
-    //         localStorage.setItem('wishlistData', wishlistString);
-    //     }
-    //     alert('Product added to wishlist');
-    // }
 
     function saveInWishList() {
 
@@ -163,7 +138,7 @@ function ProductDetails() {
 
         formData.append('product', productData.id);
 
-        // console.log(formData);
+
         axios.post(baseUrl + '/wishlist/', formData)
             .then(function (response) {
                 if (response.data.id) {
@@ -173,7 +148,6 @@ function ProductDetails() {
             .catch(function (error) {
                 console.log(error);
             });
-        // setProductInWishlist(true);
 
     }
 
@@ -207,6 +181,8 @@ function ProductDetails() {
         background: '#f9f9f9'
 
     }
+   
+    console.log(productData);
 
     return (
         <div className="container mt-4">

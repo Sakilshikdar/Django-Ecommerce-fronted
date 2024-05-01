@@ -7,7 +7,7 @@ import { useState } from 'react';
 // Third party
 import axios from 'axios';
 function ConfirmOrder() {
-    const baseurl = 'http://127.0.0.1:8000/api/'
+    const baseurl = 'https://django-ecommerce-backend.onrender.com/api/'
     const { cartData, setCartData } = useContext(CartContext);
     const [ConfirmOrder, setConfirmOrder] = useState(false);
     const [OrderStatus, setOrderStatus] = useState(false);

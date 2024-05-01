@@ -7,8 +7,10 @@ import { UserContext } from "../Context";
 
 
 function SingleProduct(props) {
+            
+        
 
-    const baseUrl = "http://127.0.0.1:8000/api/"
+    const baseUrl = "https://django-ecommerce-backend.onrender.com/api/"
     const { CurrencyDate } = useContext(CurrencyContext);
 
     // const [productData, setProductData] = useState([]);

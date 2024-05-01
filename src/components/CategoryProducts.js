@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 
 function CategoryProducts() {
-    const baseUrl = "http://127.0.0.1:8000/api"
+    const baseUrl = "https://django-ecommerce-backend.onrender.com/api"
     const [products, setProducts] = useState([]);
     const [totalResult, setTotalResult] = useState(0);
     const { category_id, category_slug } = useParams();
@@ -27,7 +27,7 @@ function CategoryProducts() {
         fetchData(baseurl);
     }
     var links = [];
-    var limite = 1;
+    var limite = 4;
     var totallink = totalResult / limite;
     for (let i = 1; i <= totallink; i++) {
         links.push(<li class="page-item"><Link onClick={() => changeUrl(baseUrl + `/products/?category=${category_id}&page=${i}`)} to={`/category/${category_slug}/${category_id}/?page=${i}`} class="page-link" >{i}</Link></li>);

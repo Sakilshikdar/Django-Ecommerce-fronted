@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 
 function AddReview() {
 
-    const baseUrl = "http://127.0.0.1:8000/api/"
+    const baseUrl = "https://django-ecommerce-backend.onrender.com/api/"
     const customer_id = localStorage.getItem('customer_id');
     const { product_id } = useParams();
     const [ErrorMsg, setErrorMsg] = useState('');

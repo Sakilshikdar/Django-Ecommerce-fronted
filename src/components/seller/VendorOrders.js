@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 
 function VendorOrders() {
 
-    const baseurl = 'http://127.0.0.1:8000/api/'
+    const baseurl = 'https://django-ecommerce-backend.onrender.com/api/'
     const [OrderItmes, setOrderItems] = useState([]);
     const vendor_id = localStorage.getItem('vendor_id');
     useEffect(() => {
@@ -58,7 +58,7 @@ function VendorOrders() {
                             <table className="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <tr>#</tr>
+                                        <tr>No</tr>
                                         <th>Product</th>
                                         <th>Price</th>
                                         <th>Status</th>

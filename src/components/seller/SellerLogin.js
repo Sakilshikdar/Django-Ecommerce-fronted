@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 function SellerLogin() {
-    const baseurl = 'http://127.0.0.1:8000/api/'
+    const baseurl = 'https://django-ecommerce-backend.onrender.com/api/'
     const [LoginFormData, setLoginFormData] = useState({
         "username": '',
         "password": ''

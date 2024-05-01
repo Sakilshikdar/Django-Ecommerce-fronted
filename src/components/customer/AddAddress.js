@@ -6,7 +6,7 @@ import { useState } from "react";
 
 function AddAddress() {
 
-    const baseUrl = "http://127.0.0.1:8000/api"
+    const baseUrl = "https://django-ecommerce-backend.onrender.com/api"
     const customer_id = localStorage.getItem('customer_id');
     console.log(customer_id);
     const [ErrorMsg, setErrorMsg] = useState('');
